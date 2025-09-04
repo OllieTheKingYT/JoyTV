@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JoyTV Plans</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #0078d7;
+      margin-bottom: 2rem;
+    }
+
+    .plan-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .plan-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .plan-description {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .choose-btn {
+      background: #0078d7;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .choose-btn:hover {
+      background: #005fa3;
+    }
+
+    .footer-note {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #777;
+      text-align: center;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Choose Your JoyTV Plan</h1>
+
+  <div class="plan-card">
+    <div class="plan-title">Free + Ads</div>
+    <div class="plan-description">
+      Watch JoyTV shows for free. Ads help fund our cast, crew, and collaborators. Enjoy a variety of content for free.
+    </div>
+    <button class="choose-btn" onclick="window.location.href='home.html'">Choose</button>
+  </div>
+
+  <div class="footer-note">
+    JoyTV is a free service supported by ads. Ads are required as they fund our cast, crew, and collaborators. Thank you for understanding.
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBk_k17IxDi2AJmDmN-iHzTV7CSOQO_VZo",
+      authDomain: "joycode-studios.firebaseapp.com",
+      projectId: "joycode-studios",
+      storageBucket: "joycode-studios.firebasestorage.app",
+      messagingSenderId: "633743383003",
+      appId: "1:633743383003:web:155a68ae785d38c2096ffe"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JoyTV Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 0.6rem;
+      background: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+    .oauth-btn.google {
+      background: #db4437;
+    }
+    .oauth-btn.github {
+      background: #24292e;
+    }
+    .info {
+      font-size: 0.8rem;
+      text-align: center;
+      margin-top: 1rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Login to JoyTV</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <button class="oauth-btn google" onclick="continueWithGoogle()">Continue with Google</button>
+    <button class="oauth-btn github" onclick="continueWithGitHub()">Continue with GitHub</button>
+    <div class="info">
+      JoyTV requires JoyAccount to be used. <a href="https://policies.joycode.co.uk">Policies.</a>
+      <p>Don't have a JoyAccount? Create one <a href="https://joycode.co.uk">Here.</a></p>
+    </div>
+  </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider,
+    GithubAuthProvider,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBk_k17IxDi2AJmDmN-iHzTV7CSOQO_VZo",
+    authDomain: "joycode-studios.firebaseapp.com",
+    projectId: "joycode-studios",
+    storageBucket: "joycode-studios.firebasestorage.app",
+    messagingSenderId: "633743383003",
+    appId: "1:633743383003:web:155a68ae785d38c2096ffe"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // 🔐 Redirect if already logged in
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      window.location.href = "home.html";
+    }
+  });
+
+  window.login = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        window.location.href = "home.html";
+      })
+      .catch((error) => {
+        alert("Login failed: " + error.message);
+      });
+  };
+
+  window.continueWithGoogle = function () {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then(() => {
+        window.location.href = "home.html";
+      })
+      .catch((error) => {
+        alert("Google sign-in failed: " + error.message);
+      });
+  };
+
+  window.continueWithGitHub = function () {
+    const provider = new GithubAuthProvider();
+    signInWithPopup(auth, provider)
+      .then(() => {
+        window.location.href = "home.html";
+      })
+      .catch((error) => {
+        alert("GitHub sign-in failed: " + error.message);
+      });
+  };
+</script>
+</body>
+</html>
